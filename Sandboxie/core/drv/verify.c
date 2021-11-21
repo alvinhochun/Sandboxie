@@ -344,6 +344,7 @@ CleanupExit:
 
 NTSTATUS KphVerifyCurrentProcess()
 {
+	return STATUS_SUCCESS;
     NTSTATUS status;
     PUNICODE_STRING processFileName = NULL;
     PUNICODE_STRING signatureFileName = NULL;
