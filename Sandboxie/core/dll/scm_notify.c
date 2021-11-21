@@ -137,7 +137,9 @@ _FX BOOLEAN Scm_Notify_Init(HMODULE module)
     //
     // hook the API
     //
-
+#ifdef NotifyServiceStatusChange
+#undef NotifyServiceStatusChange
+#endif
     SCM_IMPORT_AW(NotifyServiceStatusChange);
 
     SBIEDLL_HOOK_SCM(NotifyServiceStatusChangeA);

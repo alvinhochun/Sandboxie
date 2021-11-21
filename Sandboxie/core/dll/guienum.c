@@ -164,7 +164,9 @@ P_D3D11CreateDevice D3D11CreateDevice = NULL;
 extern P_D3D11CreateDevice D3D11CreateDevice;
 */
 
+#if WINVER < 0x0600
 ULONGLONG GetTickCount64();
+#endif
 
 //---------------------------------------------------------------------------
 // Variables
