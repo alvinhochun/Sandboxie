@@ -785,8 +785,10 @@ void ServiceServer::RunUacSlave2(ULONG_PTR *ThreadArgs)
         typedef HRESULT (*P_SHGetStockIconInfo)(
             ULONG_PTR siid, UINT uFlags, SHSTOCKICONINFO *psii);
         const ULONG SIID_SHIELD = 77;
+#if WINVER < 0x0600
         const ULONG SHGSI_ICON = 0x000000100;
         const ULONG SHGSI_SMALLICON = 0x000000001;
+#endif
 
         HMODULE hShell32 = LoadLibrary(L"shell32.dll");
         if (hShell32) {
