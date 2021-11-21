@@ -314,6 +314,7 @@ _FX BOOL Gui_ClipCursor(const RECT *lpRect)
         memzero(&req.rect, sizeof(req.rect));
         Gui_ClipCursorActive = FALSE;
     }
+    req.dpi_awareness_ctx = GetThreadDpiAwarenessContext();
 
     rpl = Gui_CallProxy(&req, sizeof(req), sizeof(ULONG));
     if (rpl) {
@@ -465,6 +466,7 @@ _FX BOOL Gui_SetCursorPos(int x, int y)
     req.error = GetLastError();
     req.x = x;
     req.y = y;
+    req.dpi_awareness_ctx = GetThreadDpiAwarenessContext();
     rpl = Gui_CallProxyEx(&req, sizeof(req), sizeof(ULONG), TRUE);
     if (rpl) {
         retval = rpl->retval;

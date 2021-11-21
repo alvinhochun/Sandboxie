@@ -3043,8 +3043,12 @@ ULONG GuiServer::ClipCursorSlave(SlaveArgs *args)
     if (req->have_rect)
         rect = &req->rect;
 
+    DPI_AWARENESS_CONTEXT old_trd_dpi_ctx = SetThreadDpiAwarenessContext(req->dpi_awareness_ctx);
+
     ClipCursor(rect); //if (! ) // as this seems to randomly fail, don't issue errors
     //    return STATUS_ACCESS_DENIED; // todo: add reply and return ret value
+
+    SetThreadDpiAwarenessContext(old_trd_dpi_ctx);
 
     return STATUS_SUCCESS;
 }
@@ -3339,10 +3343,14 @@ ULONG GuiServer::SetCursorPosSlave(SlaveArgs *args)
     if (args->req_len != sizeof(GUI_SET_CURSOR_POS_REQ))
         return STATUS_INFO_LENGTH_MISMATCH;
 
+    DPI_AWARENESS_CONTEXT old_trd_dpi_ctx = SetThreadDpiAwarenessContext(req->dpi_awareness_ctx);
+
     SetLastError(req->error);
 
     rpl->retval = (ULONG)SetCursorPos(req->x, req->y);
     rpl->error = GetLastError();
+
+    SetThreadDpiAwarenessContext(old_trd_dpi_ctx);
 
     args->rpl_len = sizeof(GUI_SET_CURSOR_POS_RPL);
     return STATUS_SUCCESS;
